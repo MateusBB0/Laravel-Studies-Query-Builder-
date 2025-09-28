@@ -5,7 +5,6 @@
 /public/storage
 /storage/*.key
 /vendor
-.env
 .env.backup
 .env.production
 .phpunit.result.cache
@@ -17,3 +16,8 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+
+# db: laravel_database_for_tests
+# user: user_laravel_database_for_tests
+# pass: pAyOpIfusI
