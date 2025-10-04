@@ -27,7 +27,7 @@ class MainController extends Controller
         // }
 
         // obter apenas algumas colunas
-        $products = DB::table('products')->get(['product_name', 'price']);
+        // $products = DB::table('products')->get(['product_name', 'price']);
         
         // pluck - obter de forma simples os dados de uma coluna específica
         // $results =  Db::table('products')->pluck('product_name');
@@ -41,10 +41,42 @@ class MainController extends Controller
         // SELECT * FROM products WHERE id = 10
         // $results = DB::table('products')->find(10);
 
+
+        // SELECT com where
+        // $products = DB::table('products')->where('id', ">=", 10)->get();
+
+        // $products = Db::table("products")
+        //             ->select('product_name', 'price')
+        //             ->get();
+        // Apresentação muito comum de se ver
+
+        // $products = DB::table('products')
+        //             ->select('product_name')->get();
+
+        // SELECT * FROM products WHERE price > 50
+        // $products = DB::table('products')
+        //             ->where('price', '>', 70)
+        //             ->get();
+
+        // SELECT * FROM products WHERE price > 50 AND product_name LIKE "A%"
+        // $products = DB::table('products')
+        //             ->where('price', '>', 30)
+        //             ->where('product_name', 'like', 'A%')
+        //             ->get();
+
+        // SELECT * FROM products WHERE price > 50 OR product_name LIKE "A%"
+        // $products = DB::table('products')
+        $products = DB::table('products')
+                    ->where('price', '>', 80)
+                    ->orWhere('product_name', 'like', 'A%')
+                    ->get();
+        
+        // $this->showRawData($products);
         $this->showDataTable($products);
         // $this->showRawData($results);
         // $this->showRawData($results);
         // $this->showDataTable($clients);
+
 
     }
 
