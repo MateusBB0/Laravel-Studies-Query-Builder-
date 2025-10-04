@@ -8,9 +8,43 @@ use Illuminate\Support\Facades\DB;
 class MainController extends Controller
 {
    public function index() {
-        $clients = DB::table('clients')->get(); // SELECT * FROM clients
-        // $this->showRawData($clients);
-        $this->showDataTable($clients);
+        // devolvendo todos os dados de uma tabela
+        // $clients = DB::table('clients')->get(); // SELECT * FROM clients
+        
+        // apresentar num array associativo e em objetos
+        // $clients = DB::table('clients')->get()->toArray();
+
+        // apresentar num array de arrays associativos
+        // map faz um ciclo foreach pelos produtos e devolvê-los como um array
+        $results = DB::table('products')->get()->map(function($item){
+            return (array) $item;
+        });
+
+        // apresentar os dados a partir dos resultados
+        // $products = DB::table('products')->get();
+        // foreach ($products as $product) {
+        //    echo $product->product_name . "<br>";
+        // }
+
+        // obter apenas algumas colunas
+        $products = DB::table('products')->get(['product_name', 'price']);
+        
+        // pluck - obter de forma simples os dados de uma coluna específica
+        // $results =  Db::table('products')->pluck('product_name');
+
+        //devolver apenas a primeira linha de um resultado
+        // $results =  Db::table('products')->get()->first();
+
+        //devolver apenas a última linha de um resultado
+        // $results =  Db::table('products')->get()->last();
+
+        // SELECT * FROM products WHERE id = 10
+        // $results = DB::table('products')->find(10);
+
+        $this->showDataTable($products);
+        // $this->showRawData($results);
+        // $this->showRawData($results);
+        // $this->showDataTable($clients);
 
     }
 
