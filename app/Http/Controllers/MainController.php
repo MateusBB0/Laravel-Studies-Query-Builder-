@@ -78,15 +78,63 @@ class MainController extends Controller
         //                 ['product_name', 'like', 'A%']
         //             ])->get();
 
-        $products =  DB::table('products')
-                     ->where('price', '>', 90.15)
-                     ->orWhere(function(Builder $query) {
-                        $query->where('product_name', 'Banana')
-                    ->orWhere('product_name', 'Cereja');
-                     })->get();
+        // $products =  DB::table('products')->where('price', '>', 90.15)->orWhere(function(Builder $query) {
+        //         $query->where('product_name', 'Banana')->orWhere('product_name', 'Cereja')
+        //         } )->get();
         
+
+
+        // SELECT * FROM products WHERE price > 50 AND product_name NOT LIKE "M%"
+        // 2 Casos Iguais:
+        // $products = DB::table('products')
+        //             ->where('product_name', 'not like', 'M%')
+        //             ->get();
+
+
+        // $products = DB::table('products')
+        //             ->whereNot('product_name', ' like', 'M%')
+        //              ->get();
+        
+        // Mostrar numa tabela o nome dos clientes e seus email com 'va' no meio
+        // $results = DB::table('clients')
+        //             ->whereAny(['client_name', 'email'], 'like', '%va%')
+        //             ->get();
+
+        // Mostrar produtos com valores entre 25 e 50
+        // $products = DB::Table('products')
+        //             ->whereBetween('price', [25,50])
+        //             ->get();
+
+        // $products = DB::Table('products')
+        //             ->whereNotBetween('price', [25,50])
+        //             ->get();
+
+        // SELECT * FROM products WHERE id = 1 OR WHERE id = 3 OR WHERE id = 5
+        // $products = DB::Table('products')
+        //             ->whereIn('id', [1,3,5])
+        //             ->get();
+
+        // todos os produtos, exceto o id 1, 3 e 5
+        // $products = DB::Table('products')
+        //             ->whereNotIn('id', [1,3,5])
+        //             ->get();
+
+        // Pegar os clientes que não tem o deleted_at não nulo
+        // $clients = Db::table('clients')
+        //             ->whereNotNull('deleted_at')
+        //             ->get();
+
+        // Pegar os dados do cliente que foi criado em tal data
+        // $clients = Db::table('clients')
+        //             ->whereDate('created_at', '2032-03-16')
+        //             ->get();
+
+        $clients = Db::table('clients')
+                    ->whereDay('created_at', '10')
+                    ->get();
+
         // $this->showRawData($products);
-        $this->showDataTable($products);
+        $this->showDataTable($clients);
         // $this->showRawData($results);
         // $this->showRawData($results);
         // $this->showDataTable($clients);
