@@ -84,6 +84,8 @@ class MainController extends Controller
         
 
 
+        
+
         // SELECT * FROM products WHERE price > 50 AND product_name NOT LIKE "M%"
         // 2 Casos Iguais:
         // $products = DB::table('products')
@@ -129,15 +131,52 @@ class MainController extends Controller
         //             ->whereDate('created_at', '2032-03-16')
         //             ->get();
 
-        $clients = Db::table('clients')
-                    ->whereDay('created_at', '10')
-                    ->get();
+        // $clients = Db::table('clients')
+        //             ->whereDay('created_at', '10')
+        //             ->get();
 
         // $this->showRawData($products);
-        $this->showDataTable($clients);
+        // $this->showDataTable($clients);
         // $this->showRawData($results);
         // $this->showRawData($results);
         // $this->showDataTable($clients);
+
+
+        // Quer ir buscar dados agregados
+        // contagem das tabelas
+        $count = DB::table('products')->count();
+        // Preço máximo
+        $max_price = DB::table('products')->max('price');
+        // Preço mínimo
+        $min_price = DB::table('products')->min('price');
+        // Preço médio
+        $avg_price = DB::table('products')->avg('price');
+        // Somatório dos preços
+        $sum_prices = DB::table('products')->sum('price');
+
+        echo "<pre>";
+        print_r([
+            'count' => $count,
+            'max_price' => $max_price,
+            'min_price' => $min_price,
+            'avg_price' => $avg_price,
+            'sum_prices' => $sum_prices
+
+        ]);
+
+
+        // Ordenar os produtos por preço de forma decrescente
+        // $results = DB::table("products")
+        //                 ->orderBy("price", 'desc')->get();
+        // $this->showDataTable($results);
+
+        // Buscar apenas os produtos com os 3 preços mais altos
+        $results = DB::table("products")
+                        ->orderBy("price", 'desc')
+                        ->limit(3)
+                        ->get();
+        $this->showDataTable($results);
+
 
 
     }
